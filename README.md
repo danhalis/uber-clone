@@ -34,6 +34,16 @@ npm install tailwind-react-native-classnames
 npm install react-native-google-places-autocomplete --save
 ```
 
+### [react-native-maps](https://github.com/react-native-maps/react-native-maps)
+```
+npm install react-native-maps
+```
+
+### [expo-location](https://docs.expo.dev/versions/latest/sdk/location/)
+```
+npm install expo-location
+```
+
 ### [react-native-dotenv](https://github.com/goatandsheep/react-native-dotenv)
 ```
 npm install -D react-native-dotenv
