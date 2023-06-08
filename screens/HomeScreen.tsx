@@ -1,5 +1,5 @@
 import { Image, StyleSheet, View } from "react-native";
-import SaferAreaView from "components/SaferAreaView";
+import TopSafeAreaView from "components/TopSafeAreaView";
 import React from "react";
 import tw from "tailwind-react-native-classnames";
 import NavOptions from "components/NavOptions";
@@ -12,7 +12,7 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
 
   return (
-    <SaferAreaView style={tw`bg-white h-full`}>
+    <TopSafeAreaView style={tw`bg-white h-full`}>
       <View style={tw`p-5`}>
         <Image
           style={{
@@ -66,7 +66,7 @@ const HomeScreen = () => {
         />
         <NavOptions />
       </View>
-    </SaferAreaView>
+    </TopSafeAreaView>
   );
 };
 

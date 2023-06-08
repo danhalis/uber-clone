@@ -3,15 +3,15 @@ import React from "react";
 import GlobalStyles from "styles/global";
 
 interface Props {
-  style: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
   children: React.ReactNode;
 }
-const SaferAreaView = ({ style, children }: Props) => {
+const TopSafeAreaView = ({ style, children }: Props) => {
   return (
-    <SafeAreaView style={[GlobalStyles.androidSafeArea, style]}>
+    <SafeAreaView style={[GlobalStyles.androidTopSafeArea, style]}>
       {children}
     </SafeAreaView>
   );
 };
 
-export default SaferAreaView;
+export default TopSafeAreaView;

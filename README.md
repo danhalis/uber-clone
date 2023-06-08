@@ -39,6 +39,11 @@ npm install react-native-google-places-autocomplete --save
 npm install react-native-maps
 ```
 
+### [react-native-maps-directions](https://github.com/bramus/react-native-maps-directions)
+```
+npm install react-native-maps-directions
+```
+
 ### [expo-location](https://docs.expo.dev/versions/latest/sdk/location/)
 ```
 npm install expo-location
