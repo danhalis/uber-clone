@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Platform } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import tw from "tailwind-react-native-classnames";
@@ -13,7 +13,8 @@ const Map = () => {
   const platform = Platform.OS;
   const [origin, setOrigin] = useState<any>(useSelector(selectOrigin));
   const destination = useSelector(selectDestination);
-  console.log(origin);
+  const mapRef = useRef<MapView>(null);
+
   useEffect(() => {
     (async () => {
       if (origin) return;
@@ -53,9 +54,29 @@ const Map = () => {
     })();
   }, []);
 
+  useEffect(() => {
+    if (!origin || !destination) return;
+
+    console.log(origin, destination);
+
+    mapRef.current?.fitToCoordinates([
+      {
+        latitude: origin.location.lat,
+        longitude: origin.location.lng,
+      },
+      {
+        latitude: destination.location.lat,
+        longitude: destination.location.lng,
+      }
+    ], {
+      edgePadding: { top: 50, right: 50, bottom: 50, left: 50, }
+    });
+  }, [origin, destination]);
+
   return (
     origin && (
       <MapView
+        ref={mapRef}
         style={tw`flex-1`}
         mapType={
           platform === "android"
@@ -71,26 +92,35 @@ const Map = () => {
           longitudeDelta: 0.005,
         }}
       >
+        <Marker
+          identifier="origin"
+          title="Origin"
+          description={origin.description}
+          coordinate={{
+            latitude: origin.location.lat,
+            longitude: origin.location.lng,
+          }}
+        />
         {destination && (
-          <MapViewDirections
-            strokeWidth={3}
-            strokeColor="black"
-            origin={origin.description}
-            destination={destination.description}
-            apikey={GOOGLE_MAPS_APIKEY}
-          />
+          <>
+            <MapViewDirections
+              strokeWidth={3}
+              strokeColor="black"
+              origin={origin.description}
+              destination={destination.description}
+              apikey={GOOGLE_MAPS_APIKEY}
+            />
+            <Marker
+              identifier="destination"
+              title="Destination"
+              description={destination.description}
+              coordinate={{
+                latitude: destination.location.lat,
+                longitude: destination.location.lng,
+              }}
+            />
+          </>
         )}
-        {
-          <Marker
-            identifier="origin"
-            title="Origin"
-            description={origin.description}
-            coordinate={{
-              latitude: origin.location.lat,
-              longitude: origin.location.lng,
-            }}
-          />
-        }
       </MapView>
     )
   );
