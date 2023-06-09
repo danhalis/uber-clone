@@ -3,8 +3,8 @@ import React from "react";
 import tw from "tailwind-react-native-classnames";
 import Map from "components/Map";
 import { createStackNavigator } from "@react-navigation/stack";
-import NavigateCard from "components/NavigateCard";
-import RideOptionsCard from "components/RideOptionsCard";
+import SelectDestinationPanel from "components/SelectDestinationPanel";
+import SelectRidePanel from "components/SelectRidePanel";
 
 const MapScreen = () => {
   const Stack = createStackNavigator();
@@ -17,15 +17,15 @@ const MapScreen = () => {
       <View style={tw`h-1/2`}>
         <Stack.Navigator>
           <Stack.Screen
-            name="NavigateCard"
-            component={NavigateCard}
+            name="SelectDestinationPanel"
+            component={SelectDestinationPanel}
             options={{
               headerShown: false,
             }}
           />
           <Stack.Screen
-            name="RideOptionsCard"
-            component={RideOptionsCard}
+            name="SelectRidePanel"
+            component={SelectRidePanel}
             options={{
               headerShown: false,
             }}

@@ -3,8 +3,8 @@ import { Point } from "react-native-google-places-autocomplete";
 import { AppState } from "store";
 
 interface NavState {
-  origin: { location: Point, description: string } | null;
-  destination: any;
+  origin: { location: { lat: number, lng: number, }; description: string } | null;
+  destination: { location: { lat: number, lng: number, }; description: string } | null;
   travelTimeInfo: any;
 }
 

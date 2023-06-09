@@ -20,12 +20,7 @@ const data = [
   },
 ];
 
-export type StackParamList = {
-  HomeScreen: undefined;
-  MapScreen: undefined;
-};
-
-const NavOptions = () => {
+const ServiceOptionList = () => {
   const navigation = useNavigation<StackNavigationProp<any>>();
 
   return (
@@ -63,4 +58,4 @@ const NavOptions = () => {
   );
 };
 
-export default NavOptions;
+export default ServiceOptionList;

@@ -2,11 +2,12 @@ import { Image, StyleSheet, View } from "react-native";
 import TopSafeAreaView from "components/TopSafeAreaView";
 import React from "react";
 import tw from "tailwind-react-native-classnames";
-import NavOptions from "components/NavOptions";
+import ServiceOptionList from "components/ServiceOptionList";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { GOOGLE_MAPS_APIKEY } from "@env";
 import { useDispatch } from "react-redux";
 import { setOrigin, setDestination } from "slices/navSlice";
+import FavoriteDestinationList from "components/FavoriteDestinationList";
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -64,7 +65,8 @@ const HomeScreen = () => {
             dispatch(setDestination(null));
           }}
         />
-        <NavOptions />
+        <ServiceOptionList />
+        <FavoriteDestinationList />
       </View>
     </TopSafeAreaView>
   );

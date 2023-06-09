@@ -3,17 +3,39 @@ import { Platform } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import tw from "tailwind-react-native-classnames";
 
-import { selectDestination, selectOrigin } from "slices/navSlice";
-import { useSelector } from "react-redux";
+import { selectDestination, selectOrigin, setOrigin } from "slices/navSlice";
+import { useDispatch, useSelector } from "react-redux";
 import * as Location from "expo-location";
 import MapViewDirections from "react-native-maps-directions";
 import { GOOGLE_MAPS_APIKEY } from "@env";
 
 const Map = () => {
   const platform = Platform.OS;
-  const [origin, setOrigin] = useState<any>(useSelector(selectOrigin));
+  const origin = useSelector(selectOrigin);
   const destination = useSelector(selectDestination);
   const mapRef = useRef<MapView>(null);
+
+  const dispatch = useDispatch();
+
+  const showFullRoute = () => {
+    if (!origin || !destination) return;
+
+    mapRef.current?.fitToCoordinates(
+      [
+        {
+          latitude: origin!.location.lat,
+          longitude: origin!.location.lng,
+        },
+        {
+          latitude: destination!.location.lat,
+          longitude: destination!.location.lng,
+        },
+      ],
+      {
+        edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
+      }
+    );
+  };
 
   useEffect(() => {
     (async () => {
@@ -44,33 +66,20 @@ const Map = () => {
           longitude: location.coords.longitude,
         })
       )[0];
-      setOrigin({
-        location: {
-          lat: location.coords.latitude,
-          lng: location.coords.longitude,
-        },
-        description: `${name} ${streetNumber} ${street} ${district} ${city} ${subregion} ${region} ${country} ${isoCountryCode} ${postalCode} ${timezone}`,
-      });
+      dispatch(
+        setOrigin({
+          location: {
+            lat: location.coords.latitude,
+            lng: location.coords.longitude,
+          },
+          description: `${name} ${streetNumber} ${street} ${district} ${city} ${subregion} ${region} ${country} ${isoCountryCode} ${postalCode} ${timezone}`,
+        })
+      );
     })();
   }, []);
 
   useEffect(() => {
-    if (!origin || !destination) return;
-
-    console.log(origin, destination);
-
-    mapRef.current?.fitToCoordinates([
-      {
-        latitude: origin.location.lat,
-        longitude: origin.location.lng,
-      },
-      {
-        latitude: destination.location.lat,
-        longitude: destination.location.lng,
-      }
-    ], {
-      edgePadding: { top: 50, right: 50, bottom: 50, left: 50, }
-    });
+    showFullRoute();
   }, [origin, destination]);
 
   return (
@@ -85,6 +94,9 @@ const Map = () => {
             ? "mutedStandard"
             : undefined
         }
+        onMapReady={() => {
+          showFullRoute();
+        }}
         initialRegion={{
           latitude: origin.location.lat,
           longitude: origin.location.lng,

@@ -1,12 +1,12 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-const RideOptionsCard = () => {
+const SelectRidePanel = () => {
   return (
     <View>
-      <Text>RideOptionsCard</Text>
+      <Text>SelectRidePanel</Text>
     </View>
   );
 };
 
-export default RideOptionsCard;
+export default SelectRidePanel;
